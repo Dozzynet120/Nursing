@@ -9,14 +9,16 @@ import Image from "next/image";
 // ✅ Reuse the same news data used in news.tsx
 const newsData = [
   {
-    title: "FUTO-INTERSWITCH PARTNERSHIP: Interswitch Donates IT Equipment to FUTO",
+    title:
+      "FUTO-INTERSWITCH PARTNERSHIP: Interswitch Donates IT Equipment to FUTO",
     description:
       "The Federal University of Technology, Owerri (FUTO) was recently selected as one of the beneficiaries of the Interswitch Equipment Donation Drive. This initiative aims to support digital learning and research capacity in Nigerian universities through cutting-edge ICT equipment. The donation underscores FUTO’s growing reputation as a leader in technological advancement and innovation.",
     date: "7 Mar 2025",
     image: "/images/news/news1.jpg",
   },
   {
-    title: "FUTO CE-sPESS opens Applications for PGD Programmes (Batch C, 2024/2025)",
+    title:
+      "FUTO CE-sPESS opens Applications for PGD Programmes (Batch C, 2024/2025)",
     description:
       "Apply for the FUTO CE-sPESS PGD Programmes (Batch C, 2024/2025) in Procurement Management, Sustainable Environmental Studies, and Sustainable Social Development. Learn online, attend campus-based exams, and enhance your career with a recognized postgraduate diploma. Apply now!",
     date: "2 Mar 2025",
@@ -121,15 +123,26 @@ const newsData = [
 
 // Helper to generate slugs
 const slugify = (text: string) =>
-  text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
+  text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
 
 export default function NewsDetailsPage() {
-  const { slug } = useParams();
+  const params = useParams();
   const router = useRouter();
 
+  // ✅ Add null safety
+  if (!params || !("slug" in params)) {
+    return (
+      <Layout>
+        <div className="py-20 text-center">
+          <h1 className="text-2xl font-semibold text-gray-700">
+            Loading article...
+          </h1>
+        </div>
+      </Layout>
+    );
+  }
+
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   const newsItem = newsData.find((n) => slugify(n.title) === slug);
 
   if (!newsItem) {
