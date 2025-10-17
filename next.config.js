@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true, // ✅ disables eslint blocking builds
+    ignoreDuringBuilds: true, // ✅ prevent build failure from lint errors
+  },
+
+  images: {
+    unoptimized: true, // ✅ ensures images load from public/ in static or Vercel deployments
   },
 };
 
