@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true, // ✅ prevent build failure from lint errors
+    ignoreDuringBuilds: true, // Prevent build errors due to lint
   },
 
   images: {
-    unoptimized: true, // ✅ ensures images load from public/ in static or Vercel deployments
+    unoptimized: true, // ✅ Ensures all images from /public load normally in production
   },
+
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
